@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import styled from "styled-components"
 import TitlePage from './components/TitlePage';
+import socketService from './services/socketService';
 
 const AppContainer = styled.div`
   display: flex;
@@ -11,6 +12,21 @@ const AppContainer = styled.div`
 `;
 
 function App() {
+  const connectSocket = async () => {
+    if(!process.env.REACT_APP_SERVER_URL) {
+      console.warn("Could not find server url in config");
+      return;
+    }
+    const socket = await socketService.connect(process.env.REACT_APP_SERVER_URL).catch((err) => {
+      console.log("Error: ", err);
+    });
+
+  }
+
+  useEffect(() => {
+    connectSocket();
+  }, []);
+
   return (
     <AppContainer>
       <TitlePage></TitlePage>
