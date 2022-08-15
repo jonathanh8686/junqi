@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import styled from "styled-components"
-import Title from './components/TitlePage';
+import TitlePage from './components/TitlePage';
 
 const AppContainer = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const AppContainer = styled.div`
 function App() {
   return (
     <AppContainer>
-      <Title></Title>
+      <TitlePage></TitlePage>
     </AppContainer>
   );
 }
