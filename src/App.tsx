@@ -17,6 +17,7 @@ function App() {
       console.warn("Could not find server url in config");
       return;
     }
+    console.log("attempting connection");
     const socket = await socketService.connect(process.env.REACT_APP_SERVER_URL).catch((err) => {
       console.log("Error: ", err);
     });
