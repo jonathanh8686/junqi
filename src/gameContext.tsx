@@ -6,6 +6,8 @@ export interface IGameContextProp {
     setIsInRoom: (inRoom: boolean) => void;
     gameStarted: boolean;
     setGameStarted: (started: boolean) => void;
+    isReady: boolean;
+    setIsReady: (started: boolean) => void;
 };
 
 const defaultState: IGameContextProp = {
@@ -13,6 +15,8 @@ const defaultState: IGameContextProp = {
     setIsInRoom: () => {console.log("Default isInRoom setting called")},
     gameStarted: false,
     setGameStarted: () => {console.log("Default gameStarted setting called")},
+    isReady: false,
+    setIsReady: () => {console.log("Default isReady setting called")}
 };
 
 export default React.createContext(defaultState);

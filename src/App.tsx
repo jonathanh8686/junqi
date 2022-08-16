@@ -11,12 +11,15 @@ import LobbyPage from "./components/LobbyPage";
 function App() {
   const [isInRoom, setIsInRoom] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const gameContextValue: IGameContextProp = {
     isInRoom,
     setIsInRoom,
     gameStarted,
-    setGameStarted
+    setGameStarted,
+    isReady,
+    setIsReady,
   };
 
   return (

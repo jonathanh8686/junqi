@@ -4,6 +4,11 @@ import gameService from "../services/gameService";
 import socketService from "../services/socketService";
 import Game from "./Game";
 
+export interface IStartGame {
+    start: boolean;
+    startingPlayer: string;
+}
+
 export default function LobbyPage() {
     const { isInRoom, setIsInRoom, gameStarted, setGameStarted } = useContext(gameContext);
     const [isJoining, setIsJoining] = useState(false);
@@ -31,6 +36,7 @@ export default function LobbyPage() {
                 window.open(`${window.location.origin}`, "_self");
             }
         });
+        handleGameStart();
     }, []);
 
     const joinRoom = async (roomID: string) => {
@@ -67,6 +73,14 @@ export default function LobbyPage() {
             setIsInRoom(true);
         }
         setIsJoining(false);
+    };
+
+    const handleGameStart = () => {
+        if (socketService.socket) {
+            gameService.onStartGame(socketService.socket, (options: IStartGame) => {
+                setGameStarted(options["start"]);
+            });
+        }
     };
 
     return (

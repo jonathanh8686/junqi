@@ -1,5 +1,6 @@
 import { Socket } from "socket.io-client";
-import { IStartGame } from "../../components/Game";
+import { IReadyUp } from "../../components/Game";
+import { IStartGame } from "../../components/LobbyPage";
 
 class GameService {
     public async joinGameRoom(socket: Socket, roomID: string): Promise<boolean> {
@@ -26,7 +27,14 @@ class GameService {
     }
 
     public async onStartGame(socket: Socket, listener: (options: IStartGame) => void) {
-        socket.on("start_game", listener)
+        socket.on("start_game", listener);
+    }
+
+    public async onReadyUp(socket: Socket, setter : (val: IReadyUp) => void): Promise<boolean> {
+        return new Promise((rs, rj) => {
+            socket.emit("ready_up");
+            socket.on("ready_up_response", setter);
+        })
     }
 }
 
