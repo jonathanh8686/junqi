@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import styled from "styled-components"
+import styled from 'styled-components';
 import TitlePage from './components/TitlePage';
 import socketService from './services/socketService';
 
