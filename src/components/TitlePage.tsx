@@ -34,53 +34,28 @@ const RoomIDInput = styled.input`
 interface ITitleProps {}
 
 export default function TitlePage(props: ITitleProps) {
-  const [isJoining, setIsJoining] = useState(false);
   const [roomID, setRoomID] = useState("");
-  const { isInRoom, setIsInRoom } = useContext(gameContext);
-
-  const joinRoom = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    setIsJoining(true);
-    const socket = socketService.socket;
-    if (!roomID || roomID.trim() === "") {
-      console.warn("Failed to join room: Invalid room ID");
-      setIsJoining(false);
-      return;
-    }
-
-    if (!socket) {
-      console.log("Failed to join room: Socket does not exist");
-      setIsJoining(false);
-      return;
-    }
-
-    const joined = await gameService
-      .joinGameRoom(socket, roomID)
-      .catch((err) => {
-        console.warn("Failed to join room: ", err);
-      });
-
-    if (joined) {
-      setIsInRoom(true);
-    }
-    setIsJoining(false);
-  };
 
   const handleRoomIDChange = (e: React.ChangeEvent<any>) => {
     setRoomID(e.target.value);
   };
 
+  const redirectToRoom = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log(roomID);
+    window.open(`${window.location.origin}/room/${roomID}`, "_self");
+  };
+
   return (
-    <form onSubmit={joinRoom}>
+    <form>
       <TitleScreenContainer>
         <Title>Junqi</Title>
         <RoomIDInput
-        placeholder="Room ID"
-        value={roomID}
-        onChange={handleRoomIDChange}
+          placeholder="Room ID"
+          value={roomID}
+          onChange={handleRoomIDChange}
         ></RoomIDInput>
-        <PlayButton>{isJoining ? "Joining..." : "Play"}</PlayButton>
+        <PlayButton onClick={redirectToRoom}>Join Room</PlayButton>
       </TitleScreenContainer>
     </form>
   );

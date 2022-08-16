@@ -8,11 +8,12 @@ class GameService {
             });
 
             socket.on("join_room_response", (res) => {
+                // server will send a response object after joining room
                 if(!("result" in res)) rj("Invalid response object! Requires result field");
                 if(res["result"] === "success") {
                     console.log("Successfully joined room: ", roomID)
                     rs(true);
-                } else {
+                } else if(res["result"] === "failure") {
                     if(!("reason" in res)) {
                         rj("Invalid response object! Requires reason field");
                     } else {
@@ -20,10 +21,12 @@ class GameService {
                     }
                 }
             });
-
         });
     }
 
+    public async startGame(socket: Socket, listener: (options: IStartGame) => void) {
+        socket.on("start_game", listener)
+    }
 }
 
 export default new GameService();
