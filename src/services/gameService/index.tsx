@@ -1,4 +1,5 @@
 import { Socket } from "socket.io-client";
+import { IStartGame } from "../../components/Game";
 
 class GameService {
     public async joinGameRoom(socket: Socket, roomID: string): Promise<boolean> {
@@ -24,7 +25,7 @@ class GameService {
         });
     }
 
-    public async startGame(socket: Socket, listener: (options: IStartGame) => void) {
+    public async onStartGame(socket: Socket, listener: (options: IStartGame) => void) {
         socket.on("start_game", listener)
     }
 }
