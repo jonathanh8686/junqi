@@ -1,5 +1,5 @@
 import { Socket } from "socket.io-client";
-import { IReadyUp } from "../../components/Game";
+import { IReadyUp } from "../../components/Game/Game";
 import { IStartGame } from "../../components/LobbyPage";
 
 class GameService {
@@ -35,6 +35,10 @@ class GameService {
             socket.emit("ready_up");
             socket.on("ready_up_response", setter);
         })
+    }
+
+    public async onPlayState(socket: Socket, listener: (val: any) => void): {
+
     }
 }
 
