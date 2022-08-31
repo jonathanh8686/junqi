@@ -3,6 +3,7 @@ import styled from "styled-components"
 import gameContext from "../../gameContext";
 import gameService from "../../services/gameService";
 import socketService from "../../services/socketService";
+import Board from "./Board";
 
 const ReadyButton = styled.button`
   margin-top: 2em;
@@ -20,8 +21,15 @@ export interface IReadyUp {
     state: boolean
 }
 
+export interface IGameState {
+    state: string
+}
+
 export default function Game() {
-    const { isInRoom, setIsInRoom, gameStarted, setGameStarted, isReady, setIsReady } = useContext(gameContext);
+    const { isInRoom, setIsInRoom,
+            gameStarted, setGameStarted,
+            isReady, setIsReady,
+            roomState, setRoomState } = useContext(gameContext);
     
     const readyUp = () => {
         if(socketService.socket){
@@ -32,10 +40,21 @@ export default function Game() {
     }
 
     useEffect(() => {
-        onPlayState(socketService.socket, val);
+        if(socketService.socket) {
+            gameService.onRoomStateChange(socketService.socket, (val: IGameState) => {
+                if(val["state"] == "play") {
+                    setRoomState("play")
+                }
+            });
+        }
     }, []);
 
     return <GameContainer>
-        {gameStarted ? <ReadyButton onClick={readyUp}>{isReady ? "Unready" : "Ready"}</ReadyButton> : <div>waiting for second player</div>}
+        {roomState != "play" && gameStarted ? <ReadyButton onClick={readyUp}>{isReady ? "Unready" : "Ready"}</ReadyButton> : <div>waiting for second player</div>}
+        {roomState == "play" &&
+        <div>
+            <Board/>
+        </div>
+        }
     </GameContainer>
 }

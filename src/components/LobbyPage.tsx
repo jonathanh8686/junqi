@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import gameContext from "../gameContext";
 import gameService from "../services/gameService";
 import socketService from "../services/socketService";
-import Game from "./Game";
+import Game from "./Game/Game";
 
 export interface IStartGame {
     start: boolean;
