@@ -32,6 +32,7 @@ export default function Game() {
             roomState, setRoomState } = useContext(gameContext);
     
     const readyUp = () => {
+        setIsReady(true);
         if(socketService.socket){
             gameService.onReadyUp(socketService.socket, (val:IReadyUp) => {
                 setIsReady(val["state"]);
