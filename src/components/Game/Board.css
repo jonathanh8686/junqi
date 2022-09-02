@@ -8,30 +8,7 @@
     align-items: center;
     width: 500px;
     height: 696px;
-    background-color: #f5c276;
-}
-
-#board .tile {
-    width: 50px;
-    height: 28px;
     outline-style: solid;
-    outline-color: #ff0000;
-
+    outline-color:black;
 }
 
-#board .campsite {
-    place-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    outline-style: solid;
-    outline-color: #ff0000;
-}
-
-#board .hq {
-    width: 50px;
-    height: 28px;
-    outline-style: solid;
-    outline-color: #ff0000;
-    background-color: #ff0000;
-}
