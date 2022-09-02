@@ -27,23 +27,23 @@ export interface IGameState {
 
 export default function Game() {
     const { isInRoom, setIsInRoom,
-            gameStarted, setGameStarted,
-            isReady, setIsReady,
-            roomState, setRoomState } = useContext(gameContext);
-    
+        gameStarted, setGameStarted,
+        isReady, setIsReady,
+        roomState, setRoomState } = useContext(gameContext);
+
     const readyUp = () => {
-        setIsReady(true);
-        if(socketService.socket){
-            gameService.onReadyUp(socketService.socket, (val:IReadyUp) => {
+        if (socketService.socket) {
+            setIsReady(true); // this sets the ready to the presumed state and will actually update once the ready_response is heard back
+            gameService.onReadyUp(socketService.socket, (val: IReadyUp) => {
                 setIsReady(val["state"]);
             });
         }
     }
 
     useEffect(() => {
-        if(socketService.socket) {
+        if (socketService.socket) {
             gameService.onRoomStateChange(socketService.socket, (val: IGameState) => {
-                if(val["state"] == "play") {
+                if (val["state"] == "play") {
                     setRoomState("play")
                 }
             });
@@ -53,9 +53,9 @@ export default function Game() {
     return <GameContainer>
         {roomState != "play" && gameStarted ? <ReadyButton onClick={readyUp}>{isReady ? "Unready" : "Ready"}</ReadyButton> : <div>waiting for second player</div>}
         {roomState == "play" &&
-        <div>
-            <Board/>
-        </div>
+            <div>
+                <Board />
+            </div>
         }
     </GameContainer>
 }
