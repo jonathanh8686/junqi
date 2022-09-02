@@ -4,6 +4,7 @@ import gameContext from "../../gameContext";
 import gameService from "../../services/gameService";
 import socketService from "../../services/socketService";
 import Board from "./Board";
+import boardProps from "./Board";
 
 const ReadyButton = styled.button`
   margin-top: 2em;
@@ -50,12 +51,23 @@ export default function Game() {
         }
     }, []);
 
+
+    let pos: [number, number] = [0,0];
+
+    let tempTiles = [{
+                    position : pos, 
+                    rank: 9,
+                    side: "blue"
+                    }
+                    ]
+
     return <GameContainer>
         {roomState != "play" && gameStarted ? <ReadyButton onClick={readyUp}>{isReady ? "Unready" : "Ready"}</ReadyButton> : <div>waiting for second player</div>}
         {roomState == "play" &&
-            <div>
-                <Board />
-            </div>
+
+        <div>
+            <Board tiles = {tempTiles} />
+        </div>
         }
     </GameContainer>
 }

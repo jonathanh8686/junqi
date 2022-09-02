@@ -26,6 +26,13 @@ function App() {
     setRoomState
   };
 
+  let pos: [number, number] = [0,0];
+    
+  let tempTiles = [{
+                  position : pos, 
+                  rank: 9,
+                  side: "blue"
+                  }]
   return (
 
     <GameContext.Provider value={gameContextValue}>
@@ -33,7 +40,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Homepage/>}/>
         <Route path='room/*' element={<LobbyPage/>}/>
-        <Route path='board' element={<Board/>}/>
+        <Route path='board' element={<Board tiles = {tempTiles} />}/>
       </Routes>
     </Router>
 

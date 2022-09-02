@@ -1,23 +1,54 @@
 import "./Tile.css";
 
 interface TileProps {
-    piece?: string
-    x: number
-    y: number
+    piece : number
+    side: string
+    r: number
+    c: number
 }
 
-export default function Tile({piece, x, y} : TileProps) {
+export default function Tile({piece, side, r, c} : TileProps) {
+    let campsites: [number, number][];
+    let headquarters: [number, number][];
 
-    let campsites = ["1,2", "2,3", "2,8", "3,2", "1,4", "3,4", "1,7", "3,7", "1,9", "3,9"];
-    let headquarters = ["1,0", "3,0", "1,11", "3,11"];
-    if(campsites.includes(x +","+ y)) {
-        return <div className = "campsite">{piece}</div>;
+    campsites = [[2,1], [3,2], [8,2], [2,3], [4,1],[4,3], [7,1],[7,3], [9,1],[9,3]];
+    headquarters = [[0,1], [0,3], [11,1], [11,3]];
+    
+    let tileType = "default"
+    let sideType = "empty";
+    let pieceRank = "";
+
+    if(piece !== -2){// -2 is no piece rank fyi
+        pieceRank = pieceRank + piece;
     }
-    else if(headquarters.includes(x + "," + y)) {
-        return <div className = "hq">{piece}</div>;
+
+    if(contains(campsites, r, c)){
+        tileType ="campsite";
+    } else if(contains(headquarters, r, c)){
+        tileType ="hq";
+    } 
+    
+    if(side === "blue"){
+        sideType = "blueSide";
+    } else if(side === "red"){
+        sideType = "redSide";
+    } else if (side === "neither"){
+        sideType = "empty"
     }
-    else {
-        return <div className = "tile">{piece}</div>;
-    }
+
+    return <div className = {"tile " + tileType + " " + sideType} >{pieceRank}</div>;
         
+}
+
+function contains(tiles: [number, number][], r : number, c : number) : boolean{
+
+    for (let i = 0; i < tiles.length; i++){
+        let item = tiles[i];
+
+        if(item[0] === r && item[1] === c){
+            return true;
+        }
+    }
+
+    return false;
 }
