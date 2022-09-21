@@ -31,15 +31,22 @@ const RoomIDInput = styled.input`
   height: 8vh;
 `;
 
+
+//stuff for main webpage
 interface ITitleProps {}
 
+
+
 export default function TitlePage(props: ITitleProps) {
+  //user inputted roomid
   const [roomID, setRoomID] = useState("");
 
+  //update roomID var as user modifies textbox
   const handleRoomIDChange = (e: React.ChangeEvent<any>) => {
     setRoomID(e.target.value);
   };
 
+  //send user to room
   const redirectToRoom = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log(roomID);

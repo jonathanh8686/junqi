@@ -7,10 +7,12 @@ interface TileProps {
     c: number
 }
 
+//return a tile component depending on the piece, side, and position passed in.
 export default function Tile({piece, side, r, c} : TileProps) {
     let campsites: [number, number][];
     let headquarters: [number, number][];
 
+    //define positions for diff tile types
     campsites = [[2,1], [3,2], [8,2], [2,3], [4,1],[4,3], [7,1],[7,3], [9,1],[9,3]];
     headquarters = [[0,1], [0,3], [11,1], [11,3]];
     
@@ -18,16 +20,18 @@ export default function Tile({piece, side, r, c} : TileProps) {
     let sideType = "empty";
     let pieceRank = "";
 
-    if(piece !== -2){// -2 is no piece rank fyi
+    if(piece !== -2){// -2 is "no piece" rank fyi
         pieceRank = pieceRank + piece;
     }
 
+    //determine and set tiletype
     if(contains(campsites, r, c)){
         tileType ="campsite";
     } else if(contains(headquarters, r, c)){
         tileType ="hq";
     } 
     
+    //set side
     if(side === "blue"){
         sideType = "blueSide";
     } else if(side === "red"){
@@ -40,6 +44,7 @@ export default function Tile({piece, side, r, c} : TileProps) {
         
 }
 
+//helper function to determine whether a position is a specific tile type
 function contains(tiles: [number, number][], r : number, c : number) : boolean{
 
     for (let i = 0; i < tiles.length; i++){
